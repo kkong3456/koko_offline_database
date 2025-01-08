@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:koko_offline_database/models/note_database.dart';
 import 'package:koko_offline_database/pages/notes_page.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NoteDatabase.initialize(); //initialize database
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => NoteDatabase(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
